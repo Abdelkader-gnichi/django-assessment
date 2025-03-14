@@ -1,0 +1,19 @@
+{% extends 'photos/base.html' %}
+
+{% block content %}
+    <h1>Upload New Image</h1>
+    <div class="upload-form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Title:</label>
+                {{ form.title }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.photo.id_for_label }}">Image:</label>
+                {{ form.photo }}
+            </div>
+            <button type="submit" class="button">Upload</button>
+        </form>
+    </div>
+{% endblock %}

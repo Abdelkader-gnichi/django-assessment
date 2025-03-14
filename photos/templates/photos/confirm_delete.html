@@ -1,0 +1,12 @@
+{% extends 'photos/base.html' %}
+
+{% block content %}
+    <h1>Confirm Delete</h1>
+    <p>Are you sure you want to delete "{{ image.title }}"?</p>
+    <img src="{{ image.thumbnail.url }}" alt="{{ image.title }}">
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button delete">Yes, Delete</button>
+        <a href="{% url 'home' %}" class="button">Cancel</a>
+    </form>
+{% endblock %}
