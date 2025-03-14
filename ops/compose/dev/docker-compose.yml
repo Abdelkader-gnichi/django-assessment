@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:dev
+    build:
+      context: ~/Documents/dev/django-assessment/ops/compose/registry/postgres
+      dockerfile: Dockerfile
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+
+  web:
+    build:
+      context: ~/Documents/dev/django-assessment
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ~/Documents/dev/django-assessment:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    # environment:
+    #   - DATABASE_URL=postgres://postgres:postgres@db:5433/photos_db
+
+volumes:
+  postgres_data:
