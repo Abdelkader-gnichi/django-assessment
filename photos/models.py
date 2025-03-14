@@ -5,6 +5,17 @@ from django.urls import reverse
 from PIL import Image as PILImage
 from django.core.files.base import ContentFile
 import os
+import logging
+logger = logging.getLogger(__name__)
+
+
+FORMAT_MAPPING = {
+            'jpg': 'JPEG',
+            'jpeg': 'JPEG',
+            'png': 'PNG',
+            'gif': 'GIF',
+            }
+
 
 class Image(models.Model):
     title = models.CharField(max_length=200)
@@ -48,9 +59,9 @@ class Image(models.Model):
             thumbnail_extension = os.path.splitext(thumbnail_name)[-1][1:]
             stream = BytesIO()
 
-            print("####", thumbnail_name, os.path.splitext(thumbnail_name)[-1][1:])
+            thumbnail_format = FORMAT_MAPPING.get(thumbnail_extension, 'JPEG')
             
-            img.save(stream, format=thumbnail_extension)
+            img.save(stream, format=thumbnail_format)
 
             stream.seek(0)
 
