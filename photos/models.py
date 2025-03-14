@@ -1,3 +1,4 @@
+import hashlib
 from io import BytesIO
 from django.db import models
 from django.urls import reverse
@@ -17,18 +18,29 @@ class Image(models.Model):
     def get_absolute_url(self):
         return reverse('image_detail', args=[str(self.id)])
     
+    def _is_equal_img_hash(self, old_image_instance):
+        new_data = self.photo.read()
+        self.photo.seek(0)
+
+        old_data = old_image_instance.photo.read()
+        old_image_instance.photo.seek(0)
+
+        return hashlib.sha256(new_data).hexdigest() == hashlib.sha256(old_data).hexdigest()
+    
     def save(self, *args, **kwargs):
         
+        # i add this logic to prevent reupload the same image when make a PUT request with the same img
         if self.pk:
             original = type(self).objects.get(pk=self.pk)
-            if original.photo != self.photo:
+            if not self._is_equal_img_hash(original):
                 original.thumbnail.delete(save=False)
                 original.photo.delete(save=False)
+            else:
+                return
 
         super().save(*args, **kwargs)
         
         if self.photo:
-
             img = PILImage.open(self.photo.path)
             img.thumbnail((300, 300))
 
@@ -48,6 +60,7 @@ class Image(models.Model):
 
             super().save(update_fields=['thumbnail'])
 
+        
         # or you can use this verbose code to create the thumbnail, for me i prefer 1st one above :) 
         # if self.photo:
         #     img = PILImage.open(self.photo.path)
