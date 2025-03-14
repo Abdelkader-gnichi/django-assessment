@@ -4,20 +4,20 @@ A simple Django-based photo album web application that allows you to upload, vie
 
 ## Features
 
--   Image upload and storage
--   Thumbnail generation
--   Image detail view
--   Image deletion
--   RESTful API for CRUD operations
--   PostgreSQL database integration
+*   Image upload and storage
+*   Thumbnail generation
+*   Image detail view
+*   Image deletion
+*   RESTful API for CRUD operations
+*   PostgreSQL database integration
 
 ## Requirements
 
--   Python 3.8 or higher
--   PostgreSQL
--   Django 4.0 or higher
--   Pillow
--   Django REST Framework
+*   Python 3.8 or higher
+*   PostgreSQL
+*   Django 4.0 or higher
+*   Pillow
+*   Django REST Framework
 
 ## Development Setup
 
@@ -61,13 +61,13 @@ A simple Django-based photo album web application that allows you to upload, vie
 
     ```python
     
-        SECRET_KEY=******
-        ENGINE_DB=******
-        NAME_DB=******
-        USER_DB=******
-        PASSWORD_DB=******
-        HOST_DB_DEV=****** # Here you can use the container ip addr or the service name 'db'
-        PORT_DB=******
+    SECRET_KEY=*****
+    ENGINE_DB=*****
+    NAME_DB=*****
+    USER_DB=*****
+    PASSWORD_DB=*****
+    HOST_DB_DEV=***** # Here you can use the container ip addr or the service name 'db'
+    PORT_DB=*****
     ```
 
 6.  Apply migrations
@@ -87,21 +87,21 @@ A simple Django-based photo album web application that allows you to upload, vie
 
 ## API Endpoints
 
--   `GET /api/images/` - List all images
--   `POST /api/images/` - Create a new image
--   `GET /api/images/<id>/` - Retrieve a specific image
--   `PUT /api/images/<id>/` - Update an image
--   `DELETE /api/images/<id>/` - Delete an image
+*   `GET /api/images/` - List all images
+*   `POST /api/images/` - Create a new image
+*   `GET /api/images/<id>/` - Retrieve a specific image
+*   `PUT /api/images/<id>/` - Update an image
+*   `DELETE /api/images/<id>/` - Delete an image
 
 ## Project Structure
 
--   `photos/` - Main app directory
-    -   `models.py` - Contains the `Image` model
-    -   `views.py` - Contains both web and API views
-    -   `serializers.py` - API serializers
-    -   `forms.py` - Forms for image upload
-    -   `urls.py` - URL routing
-    -   `templates/photos/` - HTML templates
+*   `photos/` - Main app directory
+    *   `models.py` - Contains the `Image` model
+    *   `views.py` - Contains both web and API views
+    *   `serializers.py` - API serializers
+    *   `forms.py` - Forms for image upload
+    *   `urls.py` - URL routing
+    *   `templates/photos/` - HTML templates
 
 ## Bonus Tasks Implementation
 
