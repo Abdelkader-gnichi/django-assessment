@@ -53,11 +53,3 @@ class Image(models.Model):
         #     img.save(thumb_path)
         #     self.thumbnail = 'thumbnails/' + os.path.basename(self.photo.name)
         #     super().save(update_fields=['thumbnail'])
-
-        #     thumb_dir = os.path.join('media', 'thumbnails')
-        #     os.makedirs(thumb_dir, exist_ok=True)
-            
-        #     thumb_path = os.path.join(thumb_dir, os.path.basename(self.photo.name))
-        #     img.save(thumb_path)
-        #     self.thumbnail = 'thumbnails/' + os.path.basename(self.photo.name)
-        #     super().save(update_fields=['thumbnail'])
