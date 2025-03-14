@@ -1,4 +1,3 @@
-# photos/models.py
 from io import BytesIO
 from django.db import models
 from django.urls import reverse
@@ -19,10 +18,17 @@ class Image(models.Model):
         return reverse('image_detail', args=[str(self.id)])
     
     def save(self, *args, **kwargs):
+        
+        if self.pk:
+            original = type(self).objects.get(pk=self.pk)
+            if original.photo != self.photo:
+                original.thumbnail.delete(save=False)
+                original.photo.delete(save=False)
+
         super().save(*args, **kwargs)
         
-    
-        if self.photo and not self.thumbnail:
+        if self.photo:
+
             img = PILImage.open(self.photo.path)
             img.thumbnail((300, 300))
 
@@ -38,18 +44,21 @@ class Image(models.Model):
 
             thumbnail = ContentFile(stream.getvalue(), thumbnail_name)
 
-            self.thumbnail.save(thumbnail_name, thumbnail, save=True)
+            self.thumbnail.save(thumbnail_name, thumbnail, save=False)
 
+            super().save(update_fields=['thumbnail'])
 
         # or you can use this verbose code to create the thumbnail, for me i prefer 1st one above :) 
         # if self.photo:
         #     img = PILImage.open(self.photo.path)
         #     img.thumbnail((300, 300))
-            
+
+        #     img_basename = os.path.basename(self.photo.name)
+
         #     thumb_dir = os.path.join('media', 'thumbnails')
         #     os.makedirs(thumb_dir, exist_ok=True)
             
-        #     thumb_path = os.path.join(thumb_dir, os.path.basename(self.photo.name))
+        #     thumb_path = os.path.join(thumb_dir, img_basename)
         #     img.save(thumb_path)
-        #     self.thumbnail = 'thumbnails/' + os.path.basename(self.photo.name)
+        #     self.thumbnail = 'thumbnails/' + img_basename
         #     super().save(update_fields=['thumbnail'])
