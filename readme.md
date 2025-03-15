@@ -107,7 +107,18 @@ A simple Django-based photo album web application that allows you to upload, vie
 
 ### Docker Setup
 
-If you want to run the application using Docker, a `Dockerfile` and `docker-compose.yml` file are provided.
+1. If you want to run the application using Docker, a `Dockerfile` and `docker-compose.yml` file are provided in:
+
+```bash
+    ops
+    ├── dev
+    │   └── docker-compose.yml
+    └── registry
+        └── postgres
+            ├── Dockerfile
+            └── init_db.sh
+```
+
 
 Build and run the application with:
 
