@@ -30,6 +30,9 @@ class Image(models.Model):
         return reverse('image_detail', args=[str(self.id)])
     
     def _is_equal_img_hash(self, old_image_instance):
+        if not hasattr(self, 'photo') or  not self.photo:
+            return False
+
         new_data = self.photo.read()
         self.photo.seek(0)
 
